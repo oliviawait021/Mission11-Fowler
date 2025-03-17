@@ -1,0 +1,6 @@
+@Mission11_Fowler_HostAddress = http://localhost:5101
+
+GET {{Mission11_Fowler_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
