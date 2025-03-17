@@ -258,3 +258,4 @@
 /Users/oliviafowler/RiderProjects/Mission11-Fowler/backend/Mission11-Fowler/Mission11-Fowler/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Drawing.Common.dll
 /Users/oliviafowler/RiderProjects/Mission11-Fowler/backend/Mission11-Fowler/Mission11-Fowler/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Security.Cryptography.ProtectedData.dll
 /Users/oliviafowler/RiderProjects/Mission11-Fowler/backend/Mission11-Fowler/Mission11-Fowler/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Windows.Extensions.dll
+/Users/oliviafowler/RiderProjects/Mission11-Fowler/backend/Mission11-Fowler/Mission11-Fowler/obj/Debug/net8.0/Mission11-Fowler.sourcelink.json

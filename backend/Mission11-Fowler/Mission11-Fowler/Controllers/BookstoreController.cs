@@ -29,11 +29,7 @@ namespace Mission11_Fowler.Controllers
                 TotalNumber = totalNumber
             });
         }
-
-        public IActionResult GetBooksView()
-        {
-            var books = _context.Books.ToList();
-            return View(books);
-        }
+    
+       
     }
 }
