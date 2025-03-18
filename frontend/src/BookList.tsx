@@ -12,7 +12,7 @@ function BookList() {
   useEffect(() => {
     const fetchBooks = async () => {
       const response = await fetch(
-        `https://localhost:5000/Bookstore?pageHowMany=${pageSize}&pageNum=${pageNum}`
+        `https://localhost:5000/Bookstore?pageHowMany=${pageSize}&pageNum=${pageNum}&sorted=${sortOrder}`
       );
       const data = await response.json();
 
@@ -22,7 +22,7 @@ function BookList() {
     };
 
     fetchBooks();
-  }, [pageSize, pageNum, totalItems]);
+  }, [pageSize, pageNum, sortOrder]);
 
   return (
     <>
@@ -36,7 +36,7 @@ function BookList() {
             Sort by Title ({sortOrder === "asc" ? "A-Z" : "Z-A"})
           </button>
         </div>
-        <div className="row">
+        <div className="row g-4 align-items-start justify-content-center">
           {[...books]
             .sort((a, b) => {
               return sortOrder === "asc"

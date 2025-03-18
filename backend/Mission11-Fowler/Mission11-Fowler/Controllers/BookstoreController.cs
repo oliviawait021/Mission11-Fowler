@@ -15,17 +15,29 @@ namespace Mission11_Fowler.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int pageHowMany = 5, int pageNum = 1)
+        public IActionResult Get(int pageHowMany = 5, int pageNum = 1, string sorted = null)
         {
-            var something = _context.Books.Skip((pageNum - 1) * pageHowMany)
+            var query = _context.Books.AsQueryable();
+
+            // Apply sorting based on the "sorted" parameter
+            if (sorted?.ToLower() == "desc")
+            {
+                query = query.OrderByDescending(b => b.Title);
+            }
+            else
+            {
+                query = query.OrderBy(b => b.Title); // Default sorting (asc)
+            }
+
+            var books = query.Skip((pageNum - 1) * pageHowMany)
                 .Take(pageHowMany)
                 .ToList();
-            
+
             var totalNumber = _context.Books.Count();
-            
+
             return Ok(new
             {
-                Books = something,
+                Books = books,
                 TotalNumber = totalNumber
             });
         }
