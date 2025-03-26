@@ -15,7 +15,7 @@ namespace Mission11_Fowler.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int pageHowMany = 5, int pageNum = 1, string sorted = null)
+        public IActionResult Get(int pageHowMany = 5, int pageNum = 1, string sorted = null, [FromQuery]List<string> category = null)
         {
             var query = _context.Books.AsQueryable();
 
@@ -23,6 +23,10 @@ namespace Mission11_Fowler.Controllers
             if (sorted?.ToLower() == "desc")
             {
                 query = query.OrderByDescending(b => b.Title);
+            }
+            else if (category != null && category.Any())
+            {
+                query = query.Where(b => category.Contains(b.Category));
             }
             else
             {
@@ -33,7 +37,7 @@ namespace Mission11_Fowler.Controllers
                 .Take(pageHowMany)
                 .ToList();
 
-            var totalNumber = _context.Books.Count();
+            var totalNumber = query.Count();
 
             return Ok(new
             {
@@ -41,7 +45,15 @@ namespace Mission11_Fowler.Controllers
                 TotalNumber = totalNumber
             });
         }
-    
-       
+        [HttpGet("GetBookTypes")]
+        public IActionResult GetBookTypes()
+        {
+            var bookTypes = _context.Books
+                .Select(b => b.Category)
+                .Distinct()
+                .ToList();
+            
+            return Ok(bookTypes);
+        }
     }
 }
