@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mission11-Fowler")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7749ab01597a053140113eaaeae8406a274e6f4d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31ed0a2066a2bcc272ce993ef6932189c1751ae5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mission11-Fowler")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mission11-Fowler")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
