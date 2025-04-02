@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactAppBlah",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://waterprojectoliviabackend.azurewebsites.net")
+            policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://mission13oliviabackend.azurewebsites.net")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         }));
