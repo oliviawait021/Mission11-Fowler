@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactAppBlah",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://lively-field-058ea901e.6.azurestaticapps.net/")
+            policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://lively-field-058ea901e.6.azurestaticapps.net")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         }));
