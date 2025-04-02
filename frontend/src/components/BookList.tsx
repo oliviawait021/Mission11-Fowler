@@ -3,6 +3,7 @@ import { Book } from "../types/Book";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartSummary from "./CartSummary";
+import { fetchBooks } from "../api/BooksAPI";
 
 function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [books, setBooks] = useState<Book[]>([]);
@@ -12,27 +13,45 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const categoryParams = selectedCategories
-        .map((cat) => `category=${encodeURIComponent(cat)}`)
-        .join("&");
-      const response = await fetch(
-        `https://localhost:5000/Bookstore?pageHowMany=${pageSize}&pageNum=${pageNum}&sorted=${sortOrder}${selectedCategories.length ? `&${categoryParams}` : ""}`
-      );
-      const data = await response.json();
+    const loadProjects = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchBooks(
+          pageSize,
+          pageNum,
+          sortOrder,
+          selectedCategories
+        );
 
-      setBooks(data.books);
-      setTotalPages(Math.ceil(data.totalNumber / pageSize));
+        setBooks(data.books);
+        setTotalPages(
+          Number.isFinite(data.totalNumBooks) && pageSize > 0
+            ? Math.ceil(data.totalNumBooks / pageSize)
+            : 0
+        );
+      } catch (error) {
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchBooks();
-  }, [pageSize, pageNum, sortOrder, selectedCategories]);
+    loadProjects();
+  }, [pageSize, pageNum, selectedCategories]);
+
+  if (loading) return <p>loading projects</p>;
+  if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
     <>
       <CartSummary />
+      <div className="d-flex justify-content-end mb-3">
+        <button onClick={() => navigate("/Admin")}>Manage Books</button>
+      </div>{" "}
       <div className="container">
         <div className="d-flex justify-content-end mb-3">
           <button
@@ -92,11 +111,9 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
           ))}
         </div>
       </div>
-
       <button disabled={pageNum === 1} onClick={() => setPageNum(pageNum - 1)}>
         Previous
       </button>
-
       {[...Array(totalPages)].map((_, index) => (
         <button
           key={index + 1}
@@ -112,7 +129,6 @@ function BookList({ selectedCategories }: { selectedCategories: string[] }) {
       >
         Next
       </button>
-
       <br />
       <label> Results per page:</label>
       <select

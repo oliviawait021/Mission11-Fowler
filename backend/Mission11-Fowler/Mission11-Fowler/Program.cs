@@ -12,7 +12,14 @@ builder.Services.AddDbContext<BookstoreContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("BookstoreConnection"));
 });
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+    options.AddPolicy("AllowReactAppBlah",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://waterprojectoliviabackend.azurewebsites.net")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -27,9 +34,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(x => x.WithOrigins("http://localhost:3000"));
-
 app.UseHttpsRedirection();
+
+app.UseCors("AllowReactAppBlah");
 
 app.UseAuthorization();
 
